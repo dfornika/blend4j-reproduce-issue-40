@@ -24,13 +24,37 @@ public class RunWorkflowTest {
     @Before
     public void setup() {
         historyClient.create(new History("TestHistory1"));
+
         URL workflowUrl = Resources.getResource("TestWorkflow1.ga");
+        URL input1Url = Resources.getResource("Input1.tsv");
+        URL input2Url = Resources.getResource("Input2.tsv");
         String workflow = null;
+        String input1 = null;
+        String input2 = null;
+
         try {
             workflow = Resources.toString(workflowUrl, StandardCharsets.UTF_8);
+            input1 = Resources.toString(input1Url, StandardCharsets.UTF_8);
+            input2 = Resources.toString(input2Url, StandardCharsets.UTF_8);
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        History matchingHistory = null;
+        for(final History history : historyClient.getHistories()) {
+            if(history.getName().equals("TestHistory1")) {
+                matchingHistory = history;
+            }
+        }
+
+        HistoryDataset input1HistoryDataset = new HistoryDataset();
+        input1HistoryDataset.setContent(input1);
+        HistoryDataset input2HistoryDataset = new HistoryDataset();
+        input1HistoryDataset.setContent(input2);
+
+        historyClient.createHistoryDataset(matchingHistory.getId(), input1HistoryDataset);
+        historyClient.createHistoryDataset(matchingHistory.getId(), input2HistoryDataset);
+
         workflowsClient.importWorkflow(workflow);
     }
 
