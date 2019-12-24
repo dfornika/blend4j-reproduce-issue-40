@@ -48,8 +48,10 @@ public class RunWorkflowTest {
         }
 
         HistoryDataset input1HistoryDataset = new HistoryDataset();
+        input1HistoryDataset.setSource(HistoryDataset.Source.LIBRARY);
         input1HistoryDataset.setContent(input1);
         HistoryDataset input2HistoryDataset = new HistoryDataset();
+        input2HistoryDataset.setSource(HistoryDataset.Source.LIBRARY);
         input1HistoryDataset.setContent(input2);
 
         historyClient.createHistoryDataset(matchingHistory.getId(), input1HistoryDataset);
