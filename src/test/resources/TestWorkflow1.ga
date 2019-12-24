@@ -1,1 +1,120 @@
-{"uuid": "80291a26-abfc-420f-b7b5-96546682c565", "tags": [], "format-version": "0.1", "name": "TestWorkflow1", "version": 1, "steps": {"0": {"tool_id": null, "tool_version": null, "outputs": [], "workflow_outputs": [{"output_name": "output", "uuid": "c77ffd5f-e3e5-4f26-84d4-46f1c74a46dc", "label": null}], "input_connections": {}, "tool_state": "{}", "id": 0, "uuid": "cc98b4ba-77f1-4c67-a541-2b19792297e4", "errors": null, "name": "Input dataset", "label": "WorkflowInput1", "inputs": [], "position": {"top": 211.5, "left": 257.5}, "annotation": "", "content_id": null, "type": "data_input"}, "1": {"tool_id": null, "tool_version": null, "outputs": [], "workflow_outputs": [{"output_name": "output", "uuid": "801496bd-d377-4e02-ba10-18d2fa795c8a", "label": null}], "input_connections": {}, "tool_state": "{}", "id": 1, "uuid": "7fe6af30-bce5-42d9-8638-6a6e3bd06d2a", "errors": null, "name": "Input dataset", "label": "WorkflowInput2", "inputs": [], "position": {"top": 337.5, "left": 253.5}, "annotation": "", "content_id": null, "type": "data_input"}, "2": {"tool_id": "cat1", "tool_version": "1.0.0", "outputs": [{"type": "input", "name": "out_file1"}], "workflow_outputs": [{"output_name": "out_file1", "uuid": "a122f186-b729-4f55-b015-604174d3b5b5", "label": null}], "input_connections": {"input1": {"output_name": "output", "id": 0}, "queries_0|input2": {"output_name": "output", "id": 1}}, "tool_state": "{\"__page__\": null, \"__rerun_remap_job_id__\": null, \"input1\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\", \"queries\": \"[{\\\"__index__\\\": 0, \\\"input2\\\": {\\\"__class__\\\": \\\"RuntimeValue\\\"}}]\"}", "id": 2, "uuid": "c11139d9-d2e6-4cd7-ba01-cbc77b1f1a69", "errors": null, "name": "Concatenate datasets", "post_job_actions": {"RenameDatasetActionout_file1": {"output_name": "out_file1", "action_type": "RenameDatasetAction", "action_arguments": {"newname": "output"}}}, "label": null, "inputs": [{"name": "input1", "description": "runtime parameter for tool Concatenate datasets"}], "position": {"top": 269.5, "left": 529.5}, "annotation": "", "content_id": "cat1", "type": "tool"}}, "annotation": "", "a_galaxy_workflow": "true"}
+{
+    "uuid": "80291a26-abfc-420f-b7b5-96546682c565",
+    "tags": [],
+    "format-version": "0.1",
+    "name": "TestWorkflow1",
+    "version": 1,
+    "steps": {
+        "0": {
+            "tool_id": null,
+            "tool_version": null,
+            "outputs": [],
+            "workflow_outputs": [
+                {
+                    "output_name": "output",
+                    "uuid": "c77ffd5f-e3e5-4f26-84d4-46f1c74a46dc",
+                    "label": null
+                }
+            ],
+            "input_connections": {},
+            "tool_state": "{}",
+            "id": 0,
+            "uuid": "cc98b4ba-77f1-4c67-a541-2b19792297e4",
+            "errors": null,
+            "name": "Input dataset",
+            "label": "WorkflowInput1",
+            "inputs": [],
+            "position": {
+                "top": 211.5,
+                "left": 257.5
+            },
+            "annotation": "",
+            "content_id": null,
+            "type": "data_input"
+        },
+        "1": {
+            "tool_id": null,
+            "tool_version": null,
+            "outputs": [],
+            "workflow_outputs": [
+                {
+                    "output_name": "output",
+                    "uuid": "801496bd-d377-4e02-ba10-18d2fa795c8a",
+                    "label": null
+                }
+            ],
+            "input_connections": {},
+            "tool_state": "{}",
+            "id": 1,
+            "uuid": "7fe6af30-bce5-42d9-8638-6a6e3bd06d2a",
+            "errors": null,
+            "name": "Input dataset",
+            "label": "WorkflowInput2",
+            "inputs": [],
+            "position": {
+                "top": 337.5,
+                "left": 253.5
+            },
+            "annotation": "",
+            "content_id": null,
+            "type": "data_input"
+        },
+        "2": {
+            "tool_id": "cat1",
+            "tool_version": "1.0.0",
+            "outputs": [
+                {
+                    "type": "input",
+                    "name": "out_file1"
+                }
+            ],
+            "workflow_outputs": [
+                {
+                    "output_name": "out_file1",
+                    "uuid": "a122f186-b729-4f55-b015-604174d3b5b5",
+                    "label": null
+                }
+            ],
+            "input_connections": {
+                "input1": {
+                    "output_name": "output",
+                    "id": 0
+                },
+                "queries_0|input2": {
+                    "output_name": "output",
+                    "id": 1
+                }
+            },
+            "tool_state": "{\"__page__\": null, \"__rerun_remap_job_id__\": null, \"input1\": \"{\\\"__class__\\\": \\\"RuntimeValue\\\"}\", \"queries\": \"[{\\\"__index__\\\": 0, \\\"input2\\\": {\\\"__class__\\\": \\\"RuntimeValue\\\"}}]\"}",
+            "id": 2,
+            "uuid": "c11139d9-d2e6-4cd7-ba01-cbc77b1f1a69",
+            "errors": null,
+            "name": "Concatenate datasets",
+            "post_job_actions": {
+                "RenameDatasetActionout_file1": {
+                    "output_name": "out_file1",
+                    "action_type": "RenameDatasetAction",
+                    "action_arguments": {
+                        "newname": "output"
+                    }
+                }
+            },
+            "label": null,
+            "inputs": [
+                {
+                    "name": "input1",
+                    "description": "runtime parameter for tool Concatenate datasets"
+                }
+            ],
+            "position": {
+                "top": 269.5,
+                "left": 529.5
+            },
+            "annotation": "",
+            "content_id": "cat1",
+            "type": "tool"
+        }
+    },
+    "annotation": "",
+    "a_galaxy_workflow": "true"
+}
