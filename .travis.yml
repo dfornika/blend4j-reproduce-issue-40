@@ -1,0 +1,11 @@
+language: java
+
+services:
+  - docker
+
+before_install:
+  - docker pull bgruening/galaxy-stable:19.05.1
+  - docker run -d -p 80:80 --name galaxy bgruening/galaxy-stable:19.05.1
+
+script:
+  - mvn clean test
