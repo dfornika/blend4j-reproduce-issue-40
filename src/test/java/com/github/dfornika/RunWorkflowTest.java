@@ -2,11 +2,14 @@ package com.github.dfornika;
 
 import com.github.jmchilton.blend4j.galaxy.beans.*;
 import com.github.jmchilton.blend4j.galaxy.*;
+import com.google.common.io.Resources;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
 public class RunWorkflowTest {
@@ -20,6 +23,9 @@ public class RunWorkflowTest {
     @Before
     public void setup() {
         historyClient.create(new History("TestHistory1"));
+        URL workflowUrl = Resources.getResource("TestWorkflow1.ga");
+        String workflow = Resources.toString(workflowUrl, StandardCharsets.UTF_8);
+        workflowsClient.importWorkflow(workflow);
     }
 
     @Test
