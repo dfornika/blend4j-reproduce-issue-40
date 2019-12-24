@@ -3,23 +3,28 @@ package com.github.dfornika;
 import com.github.jmchilton.blend4j.galaxy.beans.*;
 import com.github.jmchilton.blend4j.galaxy.*;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
+import java.net.URISyntaxException;
 import java.util.Map;
 
 public class RunWorkflowTest {
+    private static final String url = "http://localhost";
+    private static final String apiKey = "admin";
+
+    private GalaxyInstance instance = GalaxyInstanceFactory.get(url, apiKey);
+    private WorkflowsClient workflowsClient = instance.getWorkflowsClient();
+    private HistoriesClient historyClient = instance.getHistoriesClient();
+
+    @Before
+    public void setup() {
+        historyClient.create(new History("TestHistory1"));
+    }
 
     @Test
     public void testRunWorkflow() {
 
-        String url = "http://localhost";
-        String apiKey = "admin";
-
-        final GalaxyInstance instance = GalaxyInstanceFactory.get(url, apiKey);
-        final WorkflowsClient workflowsClient = instance.getWorkflowsClient();
-
-        // Find history
-        final HistoriesClient historyClient = instance.getHistoriesClient();
         History matchingHistory = null;
         for(final History history : historyClient.getHistories()) {
             if(history.getName().equals("TestHistory1")) {
