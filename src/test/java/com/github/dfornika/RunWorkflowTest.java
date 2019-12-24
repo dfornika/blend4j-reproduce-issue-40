@@ -7,6 +7,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
@@ -24,7 +25,12 @@ public class RunWorkflowTest {
     public void setup() {
         historyClient.create(new History("TestHistory1"));
         URL workflowUrl = Resources.getResource("TestWorkflow1.ga");
-        String workflow = Resources.toString(workflowUrl, StandardCharsets.UTF_8);
+        String workflow = null;
+        try {
+            workflow = Resources.toString(workflowUrl, StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         workflowsClient.importWorkflow(workflow);
     }
 
