@@ -3,14 +3,18 @@ package com.github.dfornika;
 import com.github.jmchilton.blend4j.galaxy.beans.*;
 import com.github.jmchilton.blend4j.galaxy.*;
 import com.google.common.io.Resources;
+import com.sun.jersey.api.client.ClientResponse;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 import java.util.Map;
 
 public class RunWorkflowTest {
@@ -20,6 +24,7 @@ public class RunWorkflowTest {
     private GalaxyInstance instance = GalaxyInstanceFactory.get(url, apiKey);
     private WorkflowsClient workflowsClient = instance.getWorkflowsClient();
     private HistoriesClient historyClient = instance.getHistoriesClient();
+    private LibrariesClient librariesClient = instance.getLibrariesClient();
 
     @Before
     public void setup() {
@@ -47,15 +52,54 @@ public class RunWorkflowTest {
             }
         }
 
-        HistoryDataset input1HistoryDataset = new HistoryDataset();
-        input1HistoryDataset.setSource(HistoryDataset.Source.LIBRARY);
-        input1HistoryDataset.setContent(input1);
-        HistoryDataset input2HistoryDataset = new HistoryDataset();
-        input2HistoryDataset.setSource(HistoryDataset.Source.LIBRARY);
-        input1HistoryDataset.setContent(input2);
+        Library tmpLibrary = new Library("TestLibrary1");
+        Library testLibrary = librariesClient.createLibrary(tmpLibrary);
 
-        historyClient.createHistoryDataset(matchingHistory.getId(), input1HistoryDataset);
-        historyClient.createHistoryDataset(matchingHistory.getId(), input2HistoryDataset);
+        FileLibraryUpload input1FileLibraryUpload = new FileLibraryUpload();
+
+        URI input1Uri = null;
+        try {
+            input1Uri = input1Url.toURI();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+
+        File input1File = new File(input1Uri);
+        input1FileLibraryUpload.setFile(input1File);
+        input1FileLibraryUpload.setContent(input1);
+        input1FileLibraryUpload.setFileType("tabular");
+        input1FileLibraryUpload.setName("Input1");
+        String testLibraryFolderId = librariesClient.getRootFolder(testLibrary.getId()).getId();
+        input1FileLibraryUpload.setFolderId(testLibraryFolderId);
+
+        ClientResponse upload1Response = librariesClient.uploadFile(testLibrary.getId(), input1FileLibraryUpload);
+
+        FileLibraryUpload input2FileLibraryUpload = new FileLibraryUpload();
+
+        URI input2Uri = null;
+        try {
+            input2Uri = input2Url.toURI();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+
+        File input2File = new File(input2Uri);
+        input2FileLibraryUpload.setFile(input2File);
+        input2FileLibraryUpload.setContent(input2);
+        input2FileLibraryUpload.setFileType("tabular");
+        input2FileLibraryUpload.setName("Input2");
+        input2FileLibraryUpload.setFolderId(testLibraryFolderId);
+        ClientResponse upload2Response = librariesClient.uploadFile(testLibrary.getId(), input2FileLibraryUpload);
+
+        List<LibraryContent> testLibraryContents = librariesClient.getLibraryContents(testLibrary.getId());
+        for(LibraryContent testLibraryContent:testLibraryContents){
+            if(testLibraryContent.getType().equals("file")) {
+                HistoryDataset inputHistoryDataset = new HistoryDataset();
+                inputHistoryDataset.setSource(HistoryDataset.Source.LIBRARY);
+                inputHistoryDataset.setContent(testLibraryContent.getId());
+                HistoryDetails inputHistoryDetails = historyClient.createHistoryDataset(matchingHistory.getId(), inputHistoryDataset);
+            }
+        }
 
         workflowsClient.importWorkflow(workflow);
     }
